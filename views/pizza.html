@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>  
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
@@ -102,7 +103,7 @@
         <div id="randomPizzas" class="row">
           <div id="pizza0" class="randomPizzaContainer" style="width:33.33%;">
             <div class="col-md-6">
-              <img src="images/pizza2.png" class="img-responsive">
+              <img src="images/pizza2.gif" class="img-responsive">
             </div>
             <div class="col-md-6">
               <h4>The Udacity Special</h4>
@@ -119,7 +120,7 @@
           </div>
           <div id="pizza1" class="randomPizzaContainer" style="width:33.33%;">
             <div class="col-md-6">
-              <img src="images/pizza2.png" class="img-responsive">
+              <img src="images/pizza2.gif" class="img-responsive">
             </div>
             <div class="col-md-6">
               <h4>The Cameron Special</h4>
@@ -168,6 +169,13 @@ form {
 }
 
 .mover {
+   -webkit-transform: translateZ(0);
+   -moz-transform: translateZ(0);
+   -ms-transform: translateZ(0);
+   -o-transform: translateZ(0);
+   transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
   position: fixed;
   width: 256px;
   z-index: -1;
@@ -189,7 +197,7 @@ form {
 }
   </style>
   <link rel="stylesheet" href="css/bootstrap-grid.min.css">
-  <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
 </body>
 
 </html>

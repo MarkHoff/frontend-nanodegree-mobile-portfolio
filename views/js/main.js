@@ -448,6 +448,8 @@ var resizePizzas = function(size) {
     return dx;
   }
 
+  // This isn't needed anymore now that we have the updatePositions function modifications.
+  
   // Iterates through pizza elements on the page and changes their widths
   //function changePizzaSizes(size) {
   //  for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
@@ -460,19 +462,17 @@ var resizePizzas = function(size) {
  // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
     
-    // we don't need these variables to be constantly be called inside the loop. Also the value of the variable newWidth should be the
+    // we don't need these variables to be constantly be called inside the loop. 
+    // Also the value of the variable newWidth should be the
     // same through out loop. 
     var pizzas = document.querySelectorAll(".randomPizzaContainer"),
-        //i = pizzas.length,
+        
+        //Use the first element of the pizzas array to determine the size of all the pizzas.
         newWidth = pizzas[0].offsetWidth + determineDx(pizzas[0], size) + 'px';
         
 		for (var i = 0; i < pizzas.length; i++) {
 			document.querySelectorAll(".randomPizzaContainer")[i].style.width = newWidth;
 		}
-		
-    //while(i--){
-    //  document.querySelectorAll(".randomPizzaContainer")[i].style.width = newWidth;
-    //}
   }
 
   changePizzaSizes(size);
@@ -516,49 +516,24 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
 
 // Moves the sliding background pizzas based on scroll position
-/*function updatePositions() {
-  frame++;
-  window.performance.mark("mark_start_frame");
-
-  var items = document.querySelectorAll('.mover');  // Selects all the elements of class .mover (all the moving pizzas)
-  for (var i = 0; i < items.length; i++) { // 24 is the number of mover pizzas that are visible.
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
-  }
-
-  // User Timing API to the rescue again. Seriously, it's worth learning.
-  // Super easy to create custom metrics.
-  window.performance.mark("mark_end_frame");
-  window.performance.measure("measure_frame_duration", "mark_start_frame", "mark_end_frame");
-  if (frame % 10 === 0) {
-    var timesToUpdatePosition = window.performance.getEntriesByName("measure_frame_duration");
-    logAverageFrame(timesToUpdatePosition);
-  }
-}*/
-
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
-  // Remove anything we can calculate outside of for loop to save some computation time
-  var items = document.querySelectorAll('.mover'),
-      scrollLoc = document.body.scrollTop / 1250,
-      phase1 = 100 * Math.sin(scrollLoc),
-      phase2 = 100 * Math.sin(scrollLoc + 1),
-      phase3 = 100 * Math.sin(scrollLoc + 2),
-      phase4 = 100 * Math.sin(scrollLoc + 3),
-      phase5 = 100 * Math.sin(scrollLoc + 4),
-      phases = [phase1, phase2, phase3, phase4, phase5],
-      i = items.length;         
-
-  //loop will go on until it reaches to 0. By using while loop, we are avoiding the value comparison for each loop
-  while (i--) { 
-    //  var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-    // items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
-    // console.log("original eq: "+items[i].style.left);
-    items[i].style.left = items[i].basicLeft + phases[i%5] + 'px';
-    // console.log("modified eq: "+items[i].style.left);
+  //Remove the math out of the loop to save frame time.
+  var phase0 = Math.sin(document.body.scrollTop / 1250);
+  var phase1 = Math.sin((document.body.scrollTop / 1250) + .5);
+  var phase2 = Math.sin((document.body.scrollTop / 1250) + 1.0);
+  var phase3 = Math.sin((document.body.scrollTop / 1250) + 1.5);
+  var phase4 = Math.sin((document.body.scrollTop / 1250) + 2.0);
+  var phases = [phase0, phase1, phase2, phase3, phase4];
+  
+  
+  var items = document.querySelectorAll('.mover');  // Selects all the elements of class .mover (all the moving pizzas)
+  // 24 is the number of mover pizzas that are visible. This number is defined in the addEventListener
+  for (var i = 0; i < items.length; i++) { 
+    
+    items[i].style.left = items[i].basicLeft + 100 * phases[i % 5] + 'px';
   }
-
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
@@ -568,7 +543,8 @@ function updatePositions() {
     var timesToUpdatePosition = window.performance.getEntriesByName("measure_frame_duration");
     logAverageFrame(timesToUpdatePosition);
   }
-}
+} 
+
 // runs updatePositions on scroll
 window.addEventListener('scroll', updatePositions);
 
@@ -576,10 +552,11 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 24; i++) {  // originally was i < 200 but only 24 visible pizzas.
+  // originally was i < 200 but there are only 24 visible pizzas, so this can save time by only looking at the visible pizzas.
+  for (var i = 0; i < 24; i++) {  
     var elem = document.createElement('img');
     elem.className = 'mover';
-    elem.src = "images/pizza2.png";
+    elem.src = "images/pizza_bg.png";
     elem.style.height = "100px";  
     elem.style.width = "73.333px";  
     elem.basicLeft = (i % cols) * s;
