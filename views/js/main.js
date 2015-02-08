@@ -462,7 +462,7 @@ var resizePizzas = function(size) {
  // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
     
-    // we don't need these variables to be constantly be called inside the loop. 
+    // we don't need these variables to be constantly called inside the loop. 
     // Also the value of the variable newWidth should be the
     // same through out loop. 
     var pizzas = document.querySelectorAll(".randomPizzaContainer"),
