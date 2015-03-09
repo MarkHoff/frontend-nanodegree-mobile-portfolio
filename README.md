@@ -1,4 +1,6 @@
-Mark Hoffmanís Web Optimization Project (Project 4) Readme.md
+Mark Hoffman‚Äôs Web Optimization Project (Project 4) Readme.md
+
+Please use the optimize2 branch for analysis.
 
 For this project, I used the following commands to establish a local http server and use ngrok to display and analyze my website.
 
@@ -21,8 +23,8 @@ I was able to get a score > 90 for both the mobile and desktop versions by doing
     <!--<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">  -->
 
 2. Inlined the style.css inside the html files instead of having it download the file.
-3. Used the ìasyncî keyword for the print.css file so that it wouldnít halt the DOM download waiting for the file to load (even though itís relatively small).
-4. Moved the Google Analytics script and the logCRP script to the bottom of the files since theyíre not needed to load the DOM or CSSOM.
+3. Used the ‚Äúasync‚Äù keyword for the print.css file so that it wouldn‚Äôt halt the DOM download waiting for the file to load (even though it‚Äôs relatively small).
+4. Moved the Google Analytics script and the logCRP script to the bottom of the files since they‚Äôre not needed to load the DOM or CSSOM.
 5. Resized and defined the sizes many of the images in the /img and the /views/images folders.
 6. Minified the following:
 a. bootstrap-grid.css (bootstrap-grid.min.css)
@@ -35,7 +37,7 @@ Finally, I was able to get the FPS parameter well below 60 by doing the followin
 
 1. Moved the Math.sin method out of the for loop in the updatePositions() function.
 2. Changing the number of pizzas to 24 made the for loop iterate fewer times than the original 200 pizzas.
-Invoked the hardware acceleration feature in the browser by triggering 3D rendering even though itís only a 2D animation.  I accomplished this by adding the following lines to the .mover class in CSS:
+Invoked the hardware acceleration feature in the browser by triggering 3D rendering even though it‚Äôs only a 2D animation.  I accomplished this by adding the following lines to the .mover class in CSS:
 
    -webkit-transform: translateZ(0);
    -moz-transform: translateZ(0);
