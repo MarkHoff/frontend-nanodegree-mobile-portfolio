@@ -444,6 +444,7 @@ var resizePizzas = function(size) {
 
     var newsize = sizeSwitcher(size);
     var dx = (newsize - oldsize) * windowwidth;
+    
 
     return dx;
   }
@@ -465,13 +466,13 @@ var resizePizzas = function(size) {
     // we don't need these variables to be constantly called inside the loop. 
     // Also the value of the variable newWidth should be the
     // same through out loop. 
-    var pizzas = document.querySelectorAll(".randomPizzaContainer"),
+    var pizzas = document.getElementsByClassName('randomPizzaContainer'),
         
         //Use the first element of the pizzas array to determine the size of all the pizzas.
         newWidth = pizzas[0].offsetWidth + determineDx(pizzas[0], size) + 'px';
         
-		for (var i = 0; i < pizzas.length; i++) {
-			document.querySelectorAll(".randomPizzaContainer")[i].style.width = newWidth;
+		for (var i = 1; i < pizzas.length; i++) {
+			document.getElementsByClassName('randomPizzaContainer')[i].style.width = newWidth;
 		}
   }
 
@@ -482,6 +483,7 @@ var resizePizzas = function(size) {
   window.performance.measure("measure_pizza_resize", "mark_start_resize", "mark_end_resize");
   var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
   console.log("Time to resize pizzas: " + timeToResize[0].duration + "ms");
+  
 }
 
 window.performance.mark("mark_start_generating"); // collect timing data
@@ -526,12 +528,11 @@ function updatePositions() {
   var phase3 = Math.sin((document.body.scrollTop / 1250) + 1.5);
   var phase4 = Math.sin((document.body.scrollTop / 1250) + 2.0);
   var phases = [phase0, phase1, phase2, phase3, phase4];
-  
-  
-  var items = document.querySelectorAll('.mover');  // Selects all the elements of class .mover (all the moving pizzas)
+  // Selects all the elements of class .mover (all the moving pizzas)
   // 24 is the number of mover pizzas that are visible. This number is defined in the addEventListener
+  var items = document.querySelectorAll('.mover');  
+  
   for (var i = 0; i < items.length; i++) { 
-    
     items[i].style.left = items[i].basicLeft + 100 * phases[i % 5] + 'px';
   }
 
@@ -553,7 +554,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
   // originally was i < 200 but there are only 24 visible pizzas, so this can save time by only looking at the visible pizzas.
-  for (var i = 0; i < 24; i++) {  
+  for (var i = 0; i < 100; i++) {  
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza_bg.png";
