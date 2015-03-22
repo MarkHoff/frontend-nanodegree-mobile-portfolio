@@ -471,7 +471,7 @@ var resizePizzas = function(size) {
         //Use the first element of the pizzas array to determine the size of all the pizzas.
         newWidth = pizzas[0].offsetWidth + determineDx(pizzas[0], size) + 'px';
         
-		for (var i = 1; i < pizzas.length; i++) {
+		for (var i = 0; i < pizzas.length; i++) {
 			document.getElementsByClassName('randomPizzaContainer')[i].style.width = newWidth;
 		}
   }
